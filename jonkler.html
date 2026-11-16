@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Jonkler</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-jonkler">
+    <h1>The Jonkler</h1>
+    <p>A certified, smoothly tweened cartoon simulation of the genuine Jonkler bouncing, squashing, stretching, and rotating with peak cartoon physics. Click him to make him boing.</p>
+
+    <div class="jonkler-stage stage-shaking" id="stage">
+        <div class="tuff-speed-lines" id="speedLines"></div>
+        <div class="jonkler-floor"></div>
+        <div class="jonkler-shadow" id="shadow"></div>
+        <div class="jonkler-actor" id="actor" onclick="jonkleClick(event)">
+            <img src="images/jonkler.png" alt="The Jonkler" class="jonkler-img">
+        </div>
+    </div>
+
+    <!-- Interactive Tuff Controls -->
+    <div class="speed-dock" style="display: flex; justify-content: center; width: 60%; margin: 16px auto; flex-wrap: wrap; gap: 8px;">
+        <span class="speed-label">Jonk Level:</span>
+        <button type="button" class="speed-btn active" id="btnClassic" onclick="setMode('classic', this)">Classic Jonk</button>
+        <button type="button" class="speed-btn" id="btnSpin" onclick="setMode('spin', this)">360&deg; Spin</button>
+        <button type="button" class="speed-btn" id="btnHyper" onclick="setMode('hyper', this)">GIGAJONK HYPER</button>
+        <button type="button" class="speed-btn" id="btnTuff" onclick="toggleTuff(this)">Tuff Speed Lines</button>
+        <button type="button" class="speed-btn" id="btnMini" onclick="spawnMiniJonkler()">+ Spawn Mini-Jonkler</button>
+    </div>
+
+    <div class="step-explanation" style="margin-top: 24px;">
+        <p><strong>Overloaded Jonkler Physics Breakdown:</strong></p>
+        <div class="step-list">
+            <div><strong>1. Pancake Ground Impact:</strong> Squashes flat to an extreme <em>175% width</em> and <em>38% height</em> with ground-rumble screen shake.</div>
+            <div><strong>2. Elastic Rocket Rebound:</strong> Launches upwards with a rubber-band stretch to <em>162% height</em> and lateral skew.</div>
+            <div><strong>3. Dynamic Tilt &amp; Squeeze:</strong> Counter-rotates smoothly between <em>-30&deg;</em> and <em>+24&deg;</em> through apex flight.</div>
+            <div><strong>4. Dynamic Ground Shadow:</strong> Expands to 165% on impact, shrinking to a pinprick at the apex.</div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+
+    <script>
+        // Web Audio API: Dynamic randomized cartoon boings and slides
+        let audioCtx = null;
+        function playBoing() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const now = audioCtx.currentTime;
+
+                osc.type = 'triangle';
+                const baseFreq = 140 + Math.random() * 80;
+                const peakFreq = 520 + Math.random() * 260;
+                const endFreq = 220 + Math.random() * 120;
+
+                osc.frequency.setValueAtTime(baseFreq, now);
+                osc.frequency.exponentialRampToValueAtTime(peakFreq, now + 0.16);
+                osc.frequency.exponentialRampToValueAtTime(endFreq, now + 0.36);
+
+                gain.gain.setValueAtTime(0.35, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.38);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } catch (e) {
+                // Audio fallback
+            }
+        }
+
+        // Comic speech bubbles on click
+        const phrases = [
+            "WHY SO SERIOUS?!",
+            "HE JONKLIN'!",
+            "OFFICER BALLS",
+            "BWAHAHAHA!",
+            "IS HE STUPID?",
+            "*BOOOIIING*",
+            "TUFF ASYLUM!",
+            "THE JONKLE CANNOT BE STOPPED",
+            "ABSOLUTE JONK",
+            "LOOK AT HIM GO!"
+        ];
+
+        function jonkleClick(e) {
+            playBoing();
+            const stage = document.getElementById('stage');
+            const actor = document.getElementById('actor');
+            const rect = actor.getBoundingClientRect();
+            const stageRect = stage.getBoundingClientRect();
+
+            const bubble = document.createElement('div');
+            bubble.className = 'comic-pop';
+            bubble.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+
+            // Position bubble directly over Jonkler's head
+            const left = (rect.left + rect.width / 2) - stageRect.left + (Math.random() * 40 - 20);
+            const top = (rect.top - 20) - stageRect.top;
+
+            bubble.style.left = left + 'px';
+            bubble.style.top = top + 'px';
+            stage.appendChild(bubble);
+
+            // Trigger quick click stretch
+            actor.style.transform = "scale(1.9, 0.4)";
+            setTimeout(() => {
+                actor.style.transform = "";
+            }, 120);
+
+            setTimeout(() => {
+                if (bubble.parentNode) {
+                    bubble.parentNode.removeChild(bubble);
+                }
+            }, 900);
+        }
+
+        function setMode(mode, btn) {
+            const stage = document.getElementById('stage');
+            stage.classList.remove('crazy-spin', 'hyper-jonkle');
+            
+            document.querySelectorAll('#btnClassic, #btnSpin, #btnHyper').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            if (mode === 'spin') {
+                stage.classList.add('crazy-spin');
+            } else if (mode === 'hyper') {
+                stage.classList.add('hyper-jonkle');
+            }
+        }
+
+        function toggleTuff(btn) {
+            const stage = document.getElementById('stage');
+            stage.classList.toggle('tuff-mode');
+            btn.classList.toggle('active');
+        }
+
+        // Spawn mini bouncing Jonklers
+        function spawnMiniJonkler() {
+            playBoing();
+            const stage = document.getElementById('stage');
+            const mini = document.createElement('div');
+            mini.className = 'mini-jonkler';
+
+            const randX = 15 + Math.random() * 70; // percentage
+            mini.style.left = randX + '%';
+
+            const duration = 0.7 + Math.random() * 0.6;
+            const delay = Math.random() * 0.5;
+            mini.style.animation = `cartoonBounce ${duration}s cubic-bezier(0.28, 0.84, 0.42, 1) infinite ${delay}s`;
+
+            const img = document.createElement('img');
+            img.src = 'images/jonkler.png';
+            img.alt = 'Mini Jonkler';
+            mini.appendChild(img);
+
+            stage.appendChild(mini);
+
+            // Auto-cleanup if more than 10
+            const minis = stage.querySelectorAll('.mini-jonkler');
+            if (minis.length > 8) {
+                stage.removeChild(minis[0]);
+            }
+        }
+
+        // Ambient floating "HA HA HA" particles
+        setInterval(() => {
+            const stage = document.getElementById('stage');
+            if (!stage) return;
+            const haha = document.createElement('div');
+            haha.className = 'haha-particle';
+            haha.innerText = Math.random() > 0.5 ? "HA HA HA" : "HE HE HE";
+
+            const posX = 10 + Math.random() * 80;
+            haha.style.left = posX + '%';
+            haha.style.bottom = '50px';
+
+            stage.appendChild(haha);
+            setTimeout(() => {
+                if (haha.parentNode) {
+                    haha.parentNode.removeChild(haha);
+                }
+            }, 2200);
+        }, 650);
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breadth-First Search (BFS)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-bfs">
+    <h1>Breadth-First Search (BFS)</h1>
+    <p>Breadth-First Search (BFS) explores a maze level by level, visiting all neighboring cells at the current distance before moving further away. In an unweighted maze, BFS is guaranteed to find the shortest path, though it requires more memory to store all visited states in a queue.</p>
+
+    <img src="images/bfs.gif" alt="BFS Maze Solve" class="maze-gif">
+
+    <div class="step-explanation">
+        <p><strong>Every step in BFS goes:</strong></p>
+        <div class="step-list">
+            <div><strong>1.</strong> Pick <em>least travelled point</em> in memory</div>
+            <div><strong>2.</strong> Check for <em>untravelled nearby paths</em>.</div>
+            <div><strong>3a.</strong> If there's <em>only one</em>, travel along it.</div>
+            <div><strong>3b.</strong> If it's a <em>intersection</em>, travel along one and save the other positions in memory.</div>
+            <div><strong>3c.</strong> If it's a <em>dead end</em>, pick another point in memory.</div>
+            <div><strong>3d.</strong> If it's the <em>finish</em>, <strong>complete</strong>.</div>
+        </div>
+    </div>
+
+    <h2>Examples:</h2>
+    <p><strong>Middle-Start Maze:</strong></p>
+    <img src="images/bfs_middle.gif" alt="BFS Middle-Start Maze Solve" class="maze-gif">
+
+    <p><strong>2× Dense Grid Maze:</strong></p>
+    <img src="images/bfs_2x.gif" alt="BFS 2x Dense Maze Solve" class="maze-gif">
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+</body>
+</html>

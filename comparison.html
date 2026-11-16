@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-comparison">
+    <h1>Algorithm Comparison</h1>
+    <p>Compare the speeds, characteristics, and trade-offs of the different maze searching algorithms running simultaneously in real time on a 37&times;37 maze.</p>
+
+    <div class="video-container">
+        <video id="comparisonVideo" controls width="100%" class="comparison-video">
+            <source src="algorithm_comparison.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="speed-dock">
+            <span class="speed-label">Speed:</span>
+            <button type="button" class="speed-btn" onclick="setSpeed(0.25, this)">0.25x</button>
+            <button type="button" class="speed-btn" onclick="setSpeed(0.5, this)">0.5x</button>
+            <button type="button" class="speed-btn active" onclick="setSpeed(1.0, this)">1x</button>
+            <button type="button" class="speed-btn" onclick="setSpeed(2.0, this)">2x</button>
+        </div>
+    </div>
+
+    <script>
+        function setSpeed(rate, btn) {
+            const video = document.getElementById('comparisonVideo');
+            if (video) {
+                video.playbackRate = rate;
+            }
+            const buttons = document.querySelectorAll('.speed-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            if (btn) {
+                btn.classList.add('active');
+            }
+        }
+    </script>
+
+    <div class="pros-cons-container">
+        <h2>Pros &amp; Cons Comparison</h2>
+        <div class="pros-cons-table-wrapper">
+            <table class="pros-cons-table">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Pros</th>
+                        <th>Cons</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>BFS</strong><br>(Breadth-First Search)</td>
+                        <td>
+                            <ul>
+                                <li>Guarantees the shortest path</li>
+                                <li>Always finds an exit if one exists</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>High memory consumption</li>
+                                <li>Slow; explores blindly in every direction</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>DFS</strong><br>(Depth-First Search)</td>
+                        <td>
+                            <ul>
+                                <li>Low memory consumption</li>
+                                <li>Can reach the goal very quickly if lucky</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Does not guarantee the shortest path</li>
+                                <li>Can explore deep dead ends unnecessarily</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>A* Search</strong></td>
+                        <td>
+                            <ul>
+                                <li>Guarantees the optimal shortest path</li>
+                                <li>Explores far fewer cells using a heuristic</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Requires an accurate heuristic function</li>
+                                <li>Higher memory usage similar to BFS</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wall Follower</strong></td>
+                        <td>
+                            <ul>
+                                <li>Zero map memory needed (only tracks current orientation)</li>
+                                <li>Extremely simple rule-based implementation</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Fails if start or goal is on an isolated island loop</li>
+                                <li>Does not guarantee shortest path; can take very long detours</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flood Fill</strong></td>
+                        <td>
+                            <ul>
+                                <li>Guarantees the shortest path</li>
+                                <li>Reliably maps and solves any open area geometry</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>High memory and processing overhead</li>
+                                <li>Explores blindly in all directions without heuristic direction</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+</body>
+</html>

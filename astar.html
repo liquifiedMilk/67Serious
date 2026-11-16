@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A* Search</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-astar">
+    <h1>A* Search</h1>
+    <p>A* Search is an informed search algorithm that uses heuristics (such as Manhattan distance) to estimate the remaining distance to the exit. By evaluating both the cost to reach a cell and the estimated cost to the goal, A* efficiently finds the shortest path while exploring fewer cells than uninformed algorithms.</p>
+
+    <img src="images/astar.gif" alt="A* Search Maze Solve" class="maze-gif">
+
+    <p><strong>How A* works:</strong> Unlike BFS and DFS which search blindly, A* uses a <em>heuristic</em> (an educated guess of the remaining distance) combined with the distance already travelled. This prioritizes paths pointing directly toward the goal, finding the shortest path while exploring far fewer dead ends.</p>
+
+    <div class="step-explanation">
+        <p><strong>Every step in A* goes:</strong></p>
+        <div class="step-list">
+            <div><strong>1.</strong> Pick <em>lowest estimated total cost point</em> in memory (distance travelled + estimate to goal)</div>
+            <div><strong>2.</strong> Check for <em>untravelled nearby paths</em>.</div>
+            <div><strong>3a.</strong> If there's <em>only one</em>, calculate its cost and travel along it.</div>
+            <div><strong>3b.</strong> If it's a <em>intersection</em>, calculate estimated costs for all paths and save them in memory.</div>
+            <div><strong>3c.</strong> If it's a <em>dead end</em>, pick the next lowest-cost point in memory.</div>
+            <div><strong>3d.</strong> If it's the <em>finish</em>, <strong>complete</strong>.</div>
+        </div>
+    </div>
+
+    <h2>Examples:</h2>
+    <p><strong>Middle-Start Maze:</strong></p>
+    <img src="images/astar_middle.gif" alt="A* Middle-Start Maze Solve" class="maze-gif">
+
+    <p><strong>2× Dense Grid Maze:</strong></p>
+    <img src="images/astar_2x.gif" alt="A* 2x Dense Maze Solve" class="maze-gif">
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+</body>
+</html>

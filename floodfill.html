@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Fill Algorithm</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-floodfill">
+    <h1>Flood Fill Algorithm</h1>
+    <p>The Flood Fill algorithm models maze solving like water filling a network of trenches. Starting from an origin, it expands outward level by level into every accessible connected corridor. By tracking distance values across the grid (wavefront propagation), it guarantees discovering the shortest path to any reachable exit.</p>
+
+    <img src="images/floodfill.gif" alt="Flood Fill Maze Solve" class="maze-gif">
+
+    <div class="step-explanation">
+        <p><strong>Every step in Flood Fill goes:</strong></p>
+        <div class="step-list">
+            <div><strong>1.</strong> Pick <em>earliest flooded point</em> in queue</div>
+            <div><strong>2.</strong> Check all <em>unflooded adjacent corridors</em> (North, East, South, West)</div>
+            <div><strong>3a.</strong> If an <em>adjacent cell is open</em> and unflooded, fill it with distance + 1.</div>
+            <div><strong>3b.</strong> If an <em>adjacent cell is a wall</em>, block flow in that direction.</div>
+            <div><strong>3c.</strong> If <em>all adjacent cells are flooded</em>, move to the next queued point.</div>
+            <div><strong>3d.</strong> If the flood reaches the <em>finish</em>, trace backwards down the distance gradient to <strong>complete</strong>.</div>
+        </div>
+    </div>
+
+    <h2>Examples:</h2>
+    <p><strong>Middle-Start Maze:</strong></p>
+    <img src="images/floodfill_middle.gif" alt="Flood Fill Middle-Start Maze Solve" class="maze-gif">
+
+    <p><strong>2× Dense Grid Maze:</strong></p>
+    <img src="images/floodfill_2x.gif" alt="Flood Fill 2x Dense Maze Solve" class="maze-gif">
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+</body>
+</html>

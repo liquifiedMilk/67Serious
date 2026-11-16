@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall Follower Algorithm</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-wallfollower">
+    <h1>Wall Follower Algorithm</h1>
+    <p>The Wall Follower algorithm (also known as the <em>right-hand rule</em> or <em>left-hand rule</em>) is one of the simplest maze-solving techniques. By keeping one hand continuously touching the wall on one side and walking forward, you are guaranteed to reach the exit in any simply connected maze where the entrance and exit are connected to the outer perimeter.</p>
+
+    <img src="images/wallfollower.gif" alt="Wall Follower Maze Solve" class="maze-gif">
+
+    <div class="step-explanation">
+        <p><strong>Every step in Wall Follower goes:</strong></p>
+        <div class="step-list">
+            <div><strong>1.</strong> Place hand on the <em>chosen wall</em> (e.g. right side)</div>
+            <div><strong>2.</strong> Check <em>open directions</em> relative to current facing orientation</div>
+            <div><strong>3a.</strong> If the <em>right side is open</em>, turn right and take a step.</div>
+            <div><strong>3b.</strong> If the <em>right side is blocked</em> but straight ahead is open, step forward.</div>
+            <div><strong>3c.</strong> If <em>straight is also blocked</em>, turn left until an open path is found.</div>
+            <div><strong>3d.</strong> If it's the <em>finish</em>, <strong>complete</strong>.</div>
+        </div>
+    </div>
+
+    <h2>Examples:</h2>
+    <p><strong>Middle-Start Maze:</strong></p>
+    <img src="images/wallfollower_middle.gif" alt="Wall Follower Middle-Start Maze Solve" class="maze-gif">
+
+    <p><strong>2× Dense Grid Maze:</strong></p>
+    <img src="images/wallfollower_2x.gif" alt="Wall Follower 2x Dense Maze Solve" class="maze-gif">
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+</body>
+</html>

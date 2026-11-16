@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depth-First Search (DFS)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-dfs">
+    <h1>Depth-First Search (DFS)</h1>
+    <p>Depth-First Search (DFS) navigates a maze by following a single branch as deeply as possible before backtracking when encountering a dead end. While DFS is memory-efficient because it only needs to keep track of the current path, it does not guarantee the shortest path to the goal.</p>
+
+    <img src="images/dfs.gif" alt="DFS Maze Solve" class="maze-gif">
+
+    <div class="step-explanation">
+        <p><strong>Every step in DFS goes:</strong></p>
+        <div class="step-list">
+            <div><strong>1.</strong> Pick <em>most recently saved point</em> in memory</div>
+            <div><strong>2.</strong> Check for <em>untravelled nearby paths</em>.</div>
+            <div><strong>3a.</strong> If there's <em>only one</em>, travel along it.</div>
+            <div><strong>3b.</strong> If it's a <em>intersection</em>, pick one path to travel deeply and save the others in memory.</div>
+            <div><strong>3c.</strong> If it's a <em>dead end</em>, backtrack and pick another point in memory.</div>
+            <div><strong>3d.</strong> If it's the <em>finish</em>, <strong>complete</strong>.</div>
+        </div>
+    </div>
+
+    <h2>Examples:</h2>
+    <p><strong>Middle-Start Maze:</strong></p>
+    <img src="images/dfs_middle.gif" alt="DFS Middle-Start Maze Solve" class="maze-gif">
+
+    <p><strong>2× Dense Grid Maze:</strong></p>
+    <img src="images/dfs_2x.gif" alt="DFS 2x Dense Maze Solve" class="maze-gif">
+
+    <div class="button-container">
+        <a href="welcome.html"><button type="button">Back to Welcome</button></a>
+    </div>
+</body>
+</html>

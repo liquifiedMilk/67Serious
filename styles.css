@@ -1,0 +1,764 @@
+* {
+    box-sizing: border-box;
+    font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 40px 60px;
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Monochrome patterns for each page */
+
+/* Welcome: Diagonal stripes (45deg) */
+body.page-welcome {
+    background-image: 
+        repeating-linear-gradient(45deg, #111827, #111827 10px, #ffffff 10px, #ffffff 20px),
+        repeating-linear-gradient(45deg, #111827, #111827 10px, #ffffff 10px, #ffffff 20px);
+    background-position: left top, right top;
+    background-repeat: repeat-y, repeat-y;
+    background-size: 28px 100%, 28px 100%;
+}
+
+/* BFS: Reversed stripes (-45deg / 135deg) */
+body.page-bfs {
+    background-image: 
+        repeating-linear-gradient(-45deg, #111827, #111827 10px, #ffffff 10px, #ffffff 20px),
+        repeating-linear-gradient(-45deg, #111827, #111827 10px, #ffffff 10px, #ffffff 20px);
+    background-position: left top, right top;
+    background-repeat: repeat-y, repeat-y;
+    background-size: 28px 100%, 28px 100%;
+}
+
+/* DFS: Alternating stripes (horizontal thick and thin stripes) */
+body.page-dfs {
+    background-image: 
+        repeating-linear-gradient(0deg, #111827 0px, #111827 14px, #ffffff 14px, #ffffff 20px, #111827 20px, #111827 24px, #ffffff 24px, #ffffff 32px),
+        repeating-linear-gradient(0deg, #111827 0px, #111827 14px, #ffffff 14px, #ffffff 20px, #111827 20px, #111827 24px, #ffffff 24px, #ffffff 32px);
+    background-position: left top, right top;
+    background-repeat: repeat-y, repeat-y;
+    background-size: 28px 100%, 28px 100%;
+}
+
+/* A*: Refined geometric alternating dots & stripes with inner keyline */
+body.page-astar {
+    background-image: 
+        /* Left border: vertical dividing keyline */
+        linear-gradient(90deg, transparent 28px, #111827 28px, #111827 30px, transparent 30px),
+        /* Left border: centered node dot (top half of 48px tile) */
+        radial-gradient(circle at 14px 12px, #111827 4px, transparent 4.5px),
+        /* Left border: horizontal stripes (bottom half of 48px tile) */
+        linear-gradient(0deg, 
+            #111827 0px, #111827 2px, 
+            transparent 2px, transparent 6px, 
+            #111827 6px, #111827 8px, 
+            transparent 8px, transparent 12px, 
+            #111827 12px, #111827 14px, 
+            transparent 14px, transparent 24px
+        ),
+        /* Right border: vertical dividing keyline */
+        linear-gradient(90deg, transparent 0px, #111827 0px, #111827 2px, transparent 2px),
+        /* Right border: centered node dot */
+        radial-gradient(circle at 14px 12px, #111827 4px, transparent 4.5px),
+        /* Right border: horizontal stripes */
+        linear-gradient(0deg, 
+            #111827 0px, #111827 2px, 
+            transparent 2px, transparent 6px, 
+            #111827 6px, #111827 8px, 
+            transparent 8px, transparent 12px, 
+            #111827 12px, #111827 14px, 
+            transparent 14px, transparent 24px
+        );
+    background-position: 
+        left 0px top 0px,
+        left 0px top 0px,
+        left 0px top 24px,
+        right 28px top 0px,
+        right 0px top 0px,
+        right 0px top 24px;
+    background-repeat: repeat-y;
+    background-size: 
+        30px 100%,
+        28px 48px,
+        28px 48px,
+        2px 100%,
+        28px 48px,
+        28px 48px;
+}
+
+/* History: Vertical dashed/stripe pattern */
+body.page-history {
+    background-image: 
+        repeating-linear-gradient(90deg, #111827 0px, #111827 4px, #ffffff 4px, #ffffff 14px),
+        repeating-linear-gradient(90deg, #111827 0px, #111827 4px, #ffffff 4px, #ffffff 14px);
+    background-position: left top, right top;
+    background-repeat: repeat-y, repeat-y;
+    background-size: 28px 100%, 28px 100%;
+}
+
+/* Wall Follower: Block/brick pattern */
+body.page-wallfollower {
+    background-image: 
+        repeating-linear-gradient(0deg, #111827 0px, #111827 6px, #ffffff 6px, #ffffff 12px),
+        repeating-linear-gradient(0deg, #111827 0px, #111827 6px, #ffffff 6px, #ffffff 12px);
+    background-position: left top, right top;
+    background-repeat: repeat-y, repeat-y;
+    background-size: 28px 100%, 28px 100%;
+}
+
+/* Flood Fill: Concentric water ripple dot pattern */
+body.page-floodfill {
+    background-image: 
+        radial-gradient(#111827 5px, transparent 5px),
+        radial-gradient(#111827 2px, transparent 2px),
+        radial-gradient(#111827 5px, transparent 5px),
+        radial-gradient(#111827 2px, transparent 2px);
+    background-position: 
+        left 2px top 0px,
+        left 14px top 12px,
+        right 2px top 0px,
+        right 14px top 12px;
+    background-repeat: repeat-y, repeat-y, repeat-y, repeat-y;
+    background-size: 28px 24px, 28px 24px, 28px 24px, 28px 24px;
+}
+
+/* Comparison: Crisp architectural diamond lattice with inner keyline */
+body.page-comparison {
+    background-image: 
+        /* Left border: vertical dividing keyline */
+        linear-gradient(90deg, transparent 28px, #111827 28px, #111827 30px, transparent 30px),
+        /* Left border: crisp 45deg lattice */
+        repeating-linear-gradient(45deg, #111827 0px, #111827 2px, transparent 2px, transparent 14px),
+        repeating-linear-gradient(-45deg, #111827 0px, #111827 2px, transparent 2px, transparent 14px),
+        /* Right border: vertical dividing keyline */
+        linear-gradient(90deg, transparent 0px, #111827 0px, #111827 2px, transparent 2px),
+        /* Right border: crisp 45deg lattice */
+        repeating-linear-gradient(45deg, #111827 0px, #111827 2px, transparent 2px, transparent 14px),
+        repeating-linear-gradient(-45deg, #111827 0px, #111827 2px, transparent 2px, transparent 14px);
+    background-position: 
+        left 0px top 0px,
+        left 0px top 0px,
+        left 0px top 0px,
+        right 28px top 0px,
+        right 0px top 0px,
+        right 0px top 0px;
+    background-repeat: repeat-y;
+    background-size: 
+        30px 100%,
+        28px 100%,
+        28px 100%,
+        2px 100%,
+        28px 100%,
+        28px 100%;
+}
+
+/* Jonkler: Laughing sawtooth jester grin monochrome pattern */
+body.page-jonkler {
+    background-image: 
+        /* Left border: vertical dividing keyline */
+        linear-gradient(90deg, transparent 28px, #111827 28px, #111827 30px, transparent 30px),
+        /* Left border: sawtooth laugh grin */
+        linear-gradient(135deg, #111827 25%, transparent 25%),
+        linear-gradient(225deg, #111827 25%, transparent 25%),
+        linear-gradient(315deg, #111827 25%, transparent 25%),
+        linear-gradient(45deg, #111827 25%, transparent 25%),
+        /* Right border: vertical dividing keyline */
+        linear-gradient(90deg, transparent 0px, #111827 0px, #111827 2px, transparent 2px),
+        /* Right border: sawtooth laugh grin */
+        linear-gradient(135deg, #111827 25%, transparent 25%),
+        linear-gradient(225deg, #111827 25%, transparent 25%),
+        linear-gradient(315deg, #111827 25%, transparent 25%),
+        linear-gradient(45deg, #111827 25%, transparent 25%);
+    background-position: 
+        left 0px top 0px,
+        left -14px top 0px,
+        left -14px top 0px,
+        left 0px top 0px,
+        left 0px top 0px,
+        right 28px top 0px,
+        right -14px top 0px,
+        right -14px top 0px,
+        right 0px top 0px,
+        right 0px top 0px;
+    background-repeat: repeat-y;
+    background-size: 
+        30px 100%,
+        28px 28px,
+        28px 28px,
+        28px 28px,
+        28px 28px,
+        2px 100%,
+        28px 28px,
+        28px 28px,
+        28px 28px,
+        28px 28px;
+}
+
+/* Squeeze text into centre 60% with left alignment */
+h1, h2, p, .text-center-60 {
+    width: 60%;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+/* Centre text for the welcome screen and it only */
+body.page-welcome h1,
+body.page-welcome p {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #111827;
+    display: table;
+}
+
+p {
+    font-size: 1.12rem;
+    line-height: 1.7;
+    color: #374151;
+    margin-bottom: 24px;
+}
+
+/* Maze GIF illustration */
+.maze-gif {
+    display: block;
+    margin: 24px auto;
+    border: 2px solid #111827;
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px #111827;
+    max-width: 100%;
+    height: auto;
+    background-color: #f9fafb;
+}
+
+/* Step explanation card */
+.step-explanation {
+    width: 60%;
+    max-width: 60%;
+    margin: 28px auto;
+    padding: 24px 28px;
+    text-align: left;
+    overflow-wrap: break-word;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    background-color: #fafafa;
+    border: 2px solid #111827;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0px #111827;
+}
+
+.step-explanation p {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.step-list {
+    padding-left: 4px;
+}
+
+.step-list div {
+    margin-bottom: 8px;
+}
+
+/* Buttons */
+.button-container,
+body > div {
+    width: 100%;
+    margin-top: 28px;
+    text-align: center;
+}
+
+button {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 22px;
+    margin: 6px;
+    cursor: pointer;
+    border: 2px solid #111827;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #111827;
+    box-shadow: 3px 3px 0px #111827;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover {
+    background-color: #f3f4f6;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px #111827;
+}
+
+button:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #111827;
+}
+
+/* Video Container & Controls */
+.video-container {
+    width: 60%;
+    margin: 28px auto;
+    text-align: center;
+}
+
+.comparison-video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border: 2.5px solid #111827;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px #111827;
+    background-color: #000000;
+}
+
+.speed-dock {
+    display: inline-flex;
+    align-items: center;
+    background: #fafafa;
+    border: 2px solid #111827;
+    border-radius: 9999px;
+    padding: 6px 14px;
+    margin-top: 16px;
+    box-shadow: 3px 3px 0px #111827;
+    gap: 8px;
+}
+
+.speed-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    margin-right: 4px;
+}
+
+.speed-btn {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    margin: 0;
+    border: 1.5px solid #111827;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #111827;
+    box-shadow: 2px 2px 0px #111827;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.speed-btn:hover {
+    background: #f3f4f6;
+    transform: translateY(-1px);
+    box-shadow: 2px 3px 0px #111827;
+}
+
+.speed-btn.active {
+    background: #111827;
+    color: #ffffff;
+    box-shadow: 1px 1px 0px #111827;
+    transform: translateY(1px);
+}
+
+/* Pros and Cons Grid */
+.pros-cons-container {
+    width: 60%;
+    margin: 36px auto 28px auto;
+}
+
+/* ---------------- JONKLER STAGE & CARTOON ANIMATION ---------------- */
+.jonkler-stage {
+    position: relative;
+    width: 60%;
+    height: 440px;
+    margin: 28px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 65%, #ffffff 0%, #f3f4f6 80%, #e5e7eb 100%);
+    border: 2.5px solid #111827;
+    border-radius: 14px;
+    box-shadow: 6px 6px 0px #111827;
+    transition: transform 0.05s ease;
+}
+
+/* Stage impact ground shake */
+.stage-shaking {
+    animation: stageQuake 1.2s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+}
+
+@keyframes stageQuake {
+    0%, 92%, 100% {
+        transform: translate(0, 0);
+    }
+    94% {
+        transform: translate(-4px, 5px) rotate(-0.5deg);
+    }
+    96% {
+        transform: translate(4px, -3px) rotate(0.5deg);
+    }
+    98% {
+        transform: translate(-2px, 2px);
+    }
+}
+
+/* Cartoon speed lines (active in Tuff Mode) */
+.tuff-speed-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: repeating-radial-gradient(circle at center, transparent 0, transparent 20px, rgba(17, 24, 39, 0.09) 20px, rgba(17, 24, 39, 0.09) 24px);
+    transition: opacity 0.3s ease;
+}
+
+.tuff-mode .tuff-speed-lines {
+    opacity: 1;
+    animation: speedLinePulse 0.12s steps(2) infinite;
+}
+
+@keyframes speedLinePulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.08); }
+}
+
+/* Floor line */
+.jonkler-floor {
+    position: absolute;
+    bottom: 40px;
+    left: 8%;
+    right: 8%;
+    height: 2.5px;
+    background: #111827;
+    opacity: 0.3;
+}
+
+/* Shadow beneath Jonkler */
+.jonkler-shadow {
+    position: absolute;
+    bottom: 28px;
+    width: 150px;
+    height: 22px;
+    background: rgba(17, 24, 39, 0.45);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: cartoonShadow 1.2s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+    transform-origin: center;
+}
+
+/* Bouncing / Squeezing / Rotating Actor */
+.jonkler-actor {
+    position: absolute;
+    bottom: 40px;
+    width: 160px;
+    height: 160px;
+    cursor: grab;
+    transform-origin: bottom center;
+    animation: cartoonBounce 1.2s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+    user-select: none;
+    -webkit-user-drag: none;
+    z-index: 5;
+}
+
+.jonkler-actor:active {
+    cursor: grabbing;
+}
+
+.jonkler-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 3px solid #111827;
+    box-shadow: 4px 4px 0px #111827;
+    pointer-events: none;
+    transition: filter 0.15s ease;
+}
+
+.jonkler-actor:hover .jonkler-img {
+    filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.85));
+}
+
+/* Mega Cartoon Squash & Stretch Keyframes with Rotation & Skew */
+@keyframes cartoonBounce {
+    0% {
+        /* Pancake floor squash */
+        transform: translateY(0px) scale(1.75, 0.38) rotate(0deg) skewX(0deg);
+    }
+    10% {
+        /* Elastic spring rocket launch with forward tilt */
+        transform: translateY(-30px) scale(0.68, 1.55) rotate(-14deg) skewX(-12deg);
+    }
+    30% {
+        /* Ascending high into the air with clockwise swing */
+        transform: translateY(-170px) scale(0.82, 1.3) rotate(24deg) skewX(12deg);
+    }
+    50% {
+        /* Apex of jump: rubber-hose wobble at max height */
+        transform: translateY(-245px) scale(1.22, 0.82) rotate(-30deg) skewX(-10deg);
+    }
+    68% {
+        /* Plunging down fast */
+        transform: translateY(-175px) scale(0.75, 1.45) rotate(18deg) skewX(14deg);
+    }
+    88% {
+        /* Missile stretch right before crash impact */
+        transform: translateY(-12px) scale(0.64, 1.62) rotate(-4deg) skewX(-4deg);
+    }
+    94% {
+        /* Ground impact begins */
+        transform: translateY(0px) scale(1.5, 0.5) rotate(0deg) skewX(0deg);
+    }
+    100% {
+        /* Full pancake squash */
+        transform: translateY(0px) scale(1.75, 0.38) rotate(0deg) skewX(0deg);
+    }
+}
+
+@keyframes cartoonShadow {
+    0% {
+        transform: scale(1.65, 1.3);
+        opacity: 0.85;
+    }
+    50% {
+        transform: scale(0.32, 0.28);
+        opacity: 0.12;
+    }
+    100% {
+        transform: scale(1.65, 1.3);
+        opacity: 0.85;
+    }
+}
+
+/* Spin Jump Mode */
+.crazy-spin .jonkler-actor {
+    animation: cartoonSpinBounce 0.95s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+}
+.crazy-spin .jonkler-shadow {
+    animation-duration: 0.95s;
+}
+
+@keyframes cartoonSpinBounce {
+    0% {
+        transform: translateY(0px) scale(1.7, 0.4) rotate(0deg);
+    }
+    14% {
+        transform: translateY(-55px) scale(0.7, 1.55) rotate(90deg);
+    }
+    50% {
+        transform: translateY(-255px) scale(1.2, 0.85) rotate(180deg);
+    }
+    78% {
+        transform: translateY(-130px) scale(0.75, 1.45) rotate(270deg);
+    }
+    94% {
+        transform: translateY(0px) scale(1.4, 0.6) rotate(355deg);
+    }
+    100% {
+        transform: translateY(0px) scale(1.7, 0.4) rotate(360deg);
+    }
+}
+
+/* MAXIMUM ASYLUM JONKLE (Extreme Hyper Speed) */
+.hyper-jonkle .jonkler-actor {
+    animation: cartoonHyperJonkle 0.48s cubic-bezier(0.28, 0.84, 0.42, 1) infinite !important;
+}
+.hyper-jonkle .jonkler-shadow {
+    animation-duration: 0.48s !important;
+}
+.hyper-jonkle .jonkler-img {
+    filter: drop-shadow(0 0 16px #a855f7) hue-rotate(20deg);
+}
+
+@keyframes cartoonHyperJonkle {
+    0% {
+        transform: translateY(0px) scale(1.9, 0.32) rotate(0deg);
+    }
+    20% {
+        transform: translateY(-80px) scale(0.55, 1.7) rotate(-25deg);
+    }
+    50% {
+        transform: translateY(-260px) scale(1.35, 0.75) rotate(35deg);
+    }
+    80% {
+        transform: translateY(-80px) scale(0.6, 1.65) rotate(-15deg);
+    }
+    100% {
+        transform: translateY(0px) scale(1.9, 0.32) rotate(0deg);
+    }
+}
+
+/* Mini Jonkler Companion */
+.mini-jonkler {
+    position: absolute;
+    bottom: 40px;
+    width: 80px;
+    height: 80px;
+    transform-origin: bottom center;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.mini-jonkler img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #111827;
+    box-shadow: 2px 2px 0px #111827;
+}
+
+/* Floating HA HA HA text particles */
+.haha-particle {
+    position: absolute;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #a855f7;
+    user-select: none;
+    pointer-events: none;
+    z-index: 2;
+    animation: floatHaHa 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes floatHaHa {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5) rotate(-12deg);
+    }
+    25% {
+        opacity: 0.75;
+    }
+    80% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-280px) scale(1.4) rotate(18deg);
+    }
+}
+
+/* Floating Comic Speech Bubble */
+.comic-pop {
+    position: absolute;
+    pointer-events: none;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #111827;
+    background: #facc15;
+    border: 2px solid #111827;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 3px 3px 0px #111827;
+    animation: popFloat 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    z-index: 10;
+}
+
+@keyframes popFloat {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(0.4) rotate(-12deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -45px) scale(1.22) rotate(8deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -85px) scale(1.05) rotate(-6deg);
+    }
+}
+
+.pros-cons-container h2 {
+    margin-bottom: 20px;
+}
+
+.pros-cons-table-wrapper {
+    border: 2px solid #111827;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 5px 5px 0px #111827;
+    background-color: #ffffff;
+}
+
+.pros-cons-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pros-cons-table th,
+.pros-cons-table td {
+    padding: 14px 18px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.pros-cons-table th {
+    background-color: #f3f4f6;
+    color: #111827;
+    border-bottom: 2px solid #111827;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.pros-cons-table th:first-child,
+.pros-cons-table td:first-child {
+    border-right: 1.5px solid #111827;
+    width: 28%;
+}
+
+.pros-cons-table th:nth-child(2),
+.pros-cons-table td:nth-child(2) {
+    border-right: 1.5px solid #111827;
+    width: 36%;
+}
+
+.pros-cons-table td:nth-child(3) {
+    width: 36%;
+}
+
+.pros-cons-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.pros-cons-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.pros-cons-table ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.pros-cons-table li {
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+.pros-cons-table strong {
+    color: #111827;
+}
